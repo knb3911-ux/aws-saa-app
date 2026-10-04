@@ -1,0 +1,700 @@
+/* デザイントークン。色はここにだけ書く（コンポーネントでハードコードしない） */
+:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #eef0f4;
+  --text: #1b1f27;
+  --text-muted: #646b78;
+  --border: #d9dde5;
+  --accent: #2f6fed;
+  --accent-text: #ffffff;
+  --correct: #1f9d55;
+  --correct-bg: #e4f6ea;
+  --wrong: #d64545;
+  --wrong-bg: #fbe7e7;
+  --unknown: #b7791f;
+  --unknown-bg: #fdf1dc;
+  --bookmark: #e0a800;
+  --shadow: 0 1px 3px rgba(20, 24, 36, 0.08);
+  --radius: 12px;
+  --tap: 48px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #101317;
+    --surface: #181c22;
+    --surface-2: #232830;
+    --text: #e8eaee;
+    --text-muted: #9aa3b0;
+    --border: #2f353f;
+    --accent: #5b8def;
+    --accent-text: #0c1220;
+    --correct: #4fc47f;
+    --correct-bg: #16301f;
+    --wrong: #ef6b6b;
+    --wrong-bg: #3a1c1c;
+    --unknown: #e0a94a;
+    --unknown-bg: #3a2c14;
+    --bookmark: #f2c14e;
+    --shadow: none;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+/* ---- レイアウト ---- */
+.app {
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: calc(var(--tap) + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 12px 0;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar h1 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar .sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.icon-btn {
+  width: var(--tap);
+  height: var(--tap);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 22px;
+  color: var(--text-muted);
+}
+
+.icon-btn:active {
+  background: var(--surface-2);
+}
+
+.icon-btn.on {
+  color: var(--bookmark);
+}
+
+.content {
+  flex: 1;
+  padding: 16px 16px calc(96px + env(safe-area-inset-bottom));
+}
+
+.bottombar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+}
+
+.bottombar > .inner {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  gap: 10px;
+}
+
+/* ---- 汎用 ---- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+
+.card + .card {
+  margin-top: 12px;
+}
+
+.card h2 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+  letter-spacing: 0.02em;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: var(--tap);
+  padding: 0 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: transform 0.05s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: transparent;
+}
+
+.btn.block {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.small {
+  font-size: 13px;
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* ---- ホーム ---- */
+.hero {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  text-align: center;
+}
+
+.hero .v {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero .k {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.mode-list {
+  display: grid;
+  gap: 10px;
+}
+
+.mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 60px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.mode-btn:active {
+  background: var(--surface-2);
+}
+
+.mode-btn .icon {
+  font-size: 24px;
+  width: 32px;
+  text-align: center;
+}
+
+.mode-btn .t {
+  font-weight: 600;
+}
+
+.mode-btn .d {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.mode-btn .badge {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.mode-btn:disabled {
+  opacity: 0.5;
+}
+
+.progress {
+  height: 8px;
+  background: var(--surface-2);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+}
+
+.progress > i {
+  display: block;
+  height: 100%;
+}
+
+.progress .o {
+  background: var(--correct);
+}
+
+.progress .x {
+  background: var(--wrong);
+}
+
+.progress .u {
+  background: var(--unknown);
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 7.5em 1fr 3.5em;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 14px;
+}
+
+.bar-row .pct {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 20px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip:active,
+.chip.on {
+  background: var(--accent);
+  color: var(--accent-text);
+  border-color: transparent;
+}
+
+/* ---- 問題 ---- */
+.source {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.stem {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+  margin: 0 0 14px;
+}
+
+.choices {
+  display: grid;
+  gap: 8px;
+}
+
+.choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  min-height: 52px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.choice .key {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.choice .txt {
+  flex: 1;
+  padding-top: 2px;
+}
+
+.choice.selected {
+  border-color: var(--accent);
+}
+
+.choice.correct {
+  border-color: var(--correct);
+  background: var(--correct-bg);
+}
+
+.choice.correct .key {
+  background: var(--correct);
+  color: #fff;
+}
+
+.choice.wrong {
+  border-color: var(--wrong);
+  background: var(--wrong-bg);
+}
+
+.choice.wrong .key {
+  background: var(--wrong);
+  color: #fff;
+}
+
+.choice.dim {
+  opacity: 0.55;
+}
+
+.choice.unknown {
+  justify-content: center;
+  color: var(--text-muted);
+  font-weight: 600;
+  border-style: dashed;
+}
+
+.choice:disabled {
+  cursor: default;
+}
+
+.verdict {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.verdict.o {
+  background: var(--correct-bg);
+  color: var(--correct);
+}
+
+.verdict.x {
+  background: var(--wrong-bg);
+  color: var(--wrong);
+}
+
+.verdict.u {
+  background: var(--unknown-bg);
+  color: var(--unknown);
+}
+
+.explanation {
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  font-size: 15px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.75;
+}
+
+.explanation h3 {
+  font-size: 13px;
+  margin: 0 0 6px;
+  color: var(--text-muted);
+}
+
+/* ---- 結果・一覧 ---- */
+.qlist {
+  display: grid;
+  gap: 8px;
+}
+
+.qitem {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.qitem .mark {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+}
+
+.qitem .mark.o {
+  background: var(--correct);
+}
+
+.qitem .mark.x {
+  background: var(--wrong);
+}
+
+.qitem .mark.u {
+  background: var(--unknown);
+}
+
+.qitem .mark.none {
+  background: var(--border);
+}
+
+.qitem .body {
+  flex: 1;
+  min-width: 0;
+}
+
+.qitem .src {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.qitem .txt {
+  font-size: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.result-score {
+  text-align: center;
+  padding: 10px 0 4px;
+}
+
+.result-score .big {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(90px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  background: var(--text);
+  color: var(--bg);
+  padding: 10px 16px;
+  border-radius: 24px;
+  font-size: 14px;
+  z-index: 10;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.toast button {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.loading {
+  padding: 60px 16px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+
+/* ---- AWS 練習問題 ---- */
+.section-title {
+  margin: 20px 4px 8px;
+}
+
+.bar-row .lbl {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select-pill {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 8px;
+  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+
+.choice .key.box {
+  border-radius: 7px;
+}
+
+.choice.selected {
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.choice.selected .key {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.choice.missed {
+  border-color: var(--correct);
+  border-style: dashed;
+}
+
+.choice .tick {
+  flex: none;
+  color: var(--correct);
+  font-weight: 800;
+  padding-top: 2px;
+}
+
+.btn.submit {
+  width: 100%;
+}
+
+.timer {
+  font-size: 15px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 14px;
+  background: var(--surface-2);
+}
+
+.timer.warn {
+  background: var(--wrong-bg);
+  color: var(--wrong);
+}
+
+.exam-nav {
+  display: flex;
+  gap: 4px;
+  margin: 0 -16px 14px;
+  padding: 0 16px 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.exam-nav .dot {
+  flex: none;
+}
+
+.exam-nav .dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.exam-nav .dot.done {
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.exam-nav .dot.cur {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+}
