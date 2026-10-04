@@ -188,6 +188,7 @@ button {
   padding: 0 18px;
   border-radius: 10px;
   font-weight: 600;
+  white-space: nowrap;
   background: var(--surface-2);
   border: 1px solid var(--border);
   transition: transform 0.05s;

@@ -85,7 +85,7 @@ export function Result(p: Props) {
 
         <div className="row" style={{ margin: "12px 0" }}>
           <button className="btn" style={{ flex: 1 }} onClick={p.onRetryWrong} disabled={correct === ids.length}>
-            間違えた問題をもう一度
+            間違いを再挑戦
           </button>
           <button className="btn primary" style={{ flex: 1 }} onClick={p.onHome}>
             ホームへ
